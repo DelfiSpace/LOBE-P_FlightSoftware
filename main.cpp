@@ -170,7 +170,7 @@ void main(void)
 
 
     Console::init( 115200 );                // baud rate: 115200 bps
-    pq9bus.begin(115200, COMMS_ADDRESS);    // baud rate: 115200 bps
+    pq9bus.begin(115200, LOBEp_ADDRESS);    // baud rate: 115200 bps
                                             // address COMMS (4)
 
     // InitBootLoader!
