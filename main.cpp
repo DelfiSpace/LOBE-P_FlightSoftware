@@ -130,7 +130,7 @@ void acquireTelemetry(LOBEpTelemetryContainer *tc)
 
 
     i = rx.GetRssi(ModemType::MODEM_FSK);
-    Console::log("-%d dBm", -i);
+//    Console::log("-%d dBm", -i);
     tc->setReceiverRSSI(i);
 }
 

@@ -6,7 +6,7 @@
 #ifndef LOBEpSERVICE_H_
 #define LOBEpSERVICE_H_
 
-#define LOBEp_SERVICE               35
+#define LOBEp_SERVICE               55
 #define LOBEp_CMD_INIT_TX           1
 #define LOBEp_CMD_INIT_RX           2
 
@@ -15,9 +15,14 @@
 #define LOBEp_CMD_SET_CAL_STATUS    15
 #define LOBEp_CMD_SET_TX_FREQ       16
 
+#define LOBEp_CMD_SWEEP_FREQ        20
+#define LOBEp_CMD_SWEEP_RESULT      21
+
+
 #define LOBEp_CMD_NO_ERROR          0
 #define LOBEp_CMD_UNKNOWN_COMMAND   1
 #define LOBEp_CMD_INVALID_VALUE     2
+#define LOBEp_CMD_NOT_DONE          3
 
 
 class LOBEpService: public Service

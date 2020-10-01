@@ -27,13 +27,27 @@ LOBEpRadio::LOBEpRadio(DSPI &bitModeSPI_tx, DSPI &bitModeSPI_rx, DSPI &packetMod
 };
 
 bool LOBEpRadio::notified(){
-    return false; //todo? Automatically make / store measurements
+    return isMeasuring; //execute in measurement.
 }
 
 
 void LOBEpRadio::runTask(){
 
-    //Make / Store Measurements?
+    txFrequency = this->startFreq + this->measurementIndex * ((this->stopFreq - this->startFreq)/nrOfMeasurements);
+    this->enableTransmit();
+    //wait 20 ms
+    __delay_cycles(48000000/(1000L/100)); // @suppress("Function cannot be resolved")
+    measurements[this->measurementIndex] = -this->getRXRSSI(); //store negative inversed variant
+    //disable mixer
+    this->disableTransmit();
+    Console::log("MEASUREMENT: %d :  %d Hz -> -%d dBm", measurementIndex, txFrequency, measurements[this->measurementIndex] );
+
+    measurementIndex += 1;
+    if(measurementIndex >= nrOfMeasurements){
+        this->disableLNA();
+        this->completeMeasurement = true;
+        this->isMeasuring = false;
+    }
     return;
 
 }
@@ -97,7 +111,7 @@ void LOBEpRadio::initRX(){
     if(rxRadio->ping()){
         rxConfig.modem = MODEM_FSK;
         rxConfig.filtertype = BT_0_5;
-        rxConfig.bandwidth = 10000;
+        rxConfig.bandwidth = 5000;
         rxConfig.bandwidthAfc = 83333;
         rxConfig.fdev = 0;
         rxConfig.datarate = 1200;
@@ -105,8 +119,9 @@ void LOBEpRadio::initRX(){
     //        Console::log("LNA_FREQ");
         rxRadio->setFrequency(rxFrequency);
 
-        rxRadio->RxChainCalibration();
-        rxRadio->enableBitMode(*bitSPI_rx, onReceiveWrapper, 0);
+       rxRadio->RxChainCalibration();
+       rxRadio->RxLockPll();
+       rxRadio->enableBitMode(*bitSPI_rx, onReceiveWrapper, 0);
 
         rxRadio->setRxConfig(&rxConfig);
         rxRadio->startReceiver();

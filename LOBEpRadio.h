@@ -11,6 +11,8 @@
 #define DB_CAL_PIN GPIO_PIN0
 #define DB_LNA_PIN GPIO_PIN7
 
+#define MAX_NR_OF_MEASUREMENTS 200
+
 class LOBEpRadio : public Task
 {
 protected:
@@ -36,6 +38,16 @@ public:
     SX1276 *rxRadio;
     TxConfig_t txConfig;
     RxConfig_t rxConfig;
+
+    volatile bool isMeasuring;
+    volatile bool completeMeasurement;
+
+    uint8_t measurements[MAX_NR_OF_MEASUREMENTS];
+
+    unsigned long startFreq;
+    unsigned long stopFreq;
+    unsigned int measurementIndex;
+    unsigned int nrOfMeasurements;
 
     unsigned long txFrequency = 429000000;
     unsigned long rxFrequency = 430000000;
