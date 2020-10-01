@@ -170,7 +170,7 @@ void main(void)
 
 
     Console::init( 115200 );                // baud rate: 115200 bps
-    pq9bus.begin(115200, LOBEp_ADDRESS);    // baud rate: 115200 bps
+    pq9bus.begin(115200, LOBEP_ADDRESS);    // baud rate: 115200 bps
                                             // address COMMS (4)
 
     // InitBootLoader!
@@ -198,14 +198,6 @@ void main(void)
     dbInputPower.setShuntResistor(33);
     dbDCDCPower.setShuntResistor(33);
 
-
-
-    // Initialize SPI master
-    controlSPI.initMaster(DSPI::MODE0, DSPI::MSBFirst, 1000000);
-
-    Console::init( 115200 );                        // baud rate: 9600 bps
-    pq9bus.begin(115200, COMMS_ADDRESS);    // baud rate: 115200 bps
-                                            // address COMMS (4)
 
     // link the command handler to the PQ9 bus:
     // every time a new command is received, it will be forwarded to the command handler

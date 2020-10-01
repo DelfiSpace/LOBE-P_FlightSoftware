@@ -41,7 +41,7 @@
 
 #define FCLOCK 48000000
 
-#define LOBEp_ADDRESS     9
+#define LOBEP_ADDRESS     9
 
 // callback functions
 void acquireTelemetry(LOBEpTelemetryContainer *tc);
