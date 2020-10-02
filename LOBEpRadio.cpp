@@ -111,7 +111,7 @@ void LOBEpRadio::initRX(){
     if(rxRadio->ping()){
         rxConfig.modem = MODEM_FSK;
         rxConfig.filtertype = BT_0_5;
-        rxConfig.bandwidth = 5000;
+        rxConfig.bandwidth = 10000;
         rxConfig.bandwidthAfc = 83333;
         rxConfig.fdev = 0;
         rxConfig.datarate = 1200;
